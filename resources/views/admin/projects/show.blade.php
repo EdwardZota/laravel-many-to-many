@@ -13,6 +13,11 @@
               <p class="card-text"><span class="font-weight-bold">Tipologia:</span> <br>
                 {{$project->type?$project->type->name:'Nessuna tipologia assegnata'}}
             </p>
+            <p class="card-text"><span class="font-weight-bold">Tecnologie:</span> <br>
+                @foreach ($project->technologies as $technology)
+                    <span class="badge rounded-pill text-bg-info">{{$technology->name}}</span>
+                @endforeach
+            </p>
             </div>
           </div>
     </div>

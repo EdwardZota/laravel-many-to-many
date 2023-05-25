@@ -31,7 +31,8 @@ class UpdateProjectRequest extends FormRequest
             'description' => 'nullable|max:65000',
             'link' => 'nullable|url|max:255',
             'preview_image' => 'nullable|url|max:255',
-            'type_id' => 'nullable|exists:types,id'
+            'type_id' => 'nullable|exists:types,id',
+            'technology_id' => 'exists:technologies,id'
         ];
 
     }
@@ -50,7 +51,9 @@ class UpdateProjectRequest extends FormRequest
             'preview_image.url' => 'L\'URL inserito non è valido',
             'preview_image.max' => 'Lunghezza massima preview image link di 255 caratteri',
 
-            'type_id.exists' => 'Il valore inserito non è accettabile'
+            'type_id.exists' => 'Il valore(tipo) inserito non è accettabile',
+
+            'technology_id.exists' => 'Il valore(tecnologia) inserito non è accettabile'
 
         ];
     }

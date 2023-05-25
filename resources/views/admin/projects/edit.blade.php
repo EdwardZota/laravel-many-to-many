@@ -84,8 +84,29 @@
                             <p class="text-success">Campo inserito correttamente!</p>
                         @endif
                     </div>
+                    <div class="mb-3">
+                        @foreach ($technologies as $technology)
+                        <div>
+                            @if ($errors->any())
+                                <input @if (in_array($technology->id, old('technologies',[]))) checked @endif class="form-check-input" type="checkbox" id="technology_{{$technology->id}}" name="technologies[]" value="{{$technology->id}}">
+                            @else
+                                <input @if ($project->technologies->contains($technology->id)) checked @endif class="form-check-input" type="checkbox" id="technology_{{$technology->id}}" name="technologies[]" value="{{$technology->id}}">
+                            @endif
+                            <label class="form-check-label" for="technology_{{$technology->id}}">{{$technology->name}}</label>
+                        </div>
+                        @endforeach
+                        @if ($errors->has('technologies'))
+                            @error('technologies')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        @elseif ($errors->any() && old('technology_id'))
+                            <p class="text-success">Campo inserito correttamente!</p>
+                        @endif
+                    </div>
 
-                    <button type="submit" class="btn btn-primary my-4">Salva nuovo fumetto</button>
+                    <button type="submit" class="btn btn-primary my-4">Salva aggiornamenti progetto</button>
 
             </form>
 
