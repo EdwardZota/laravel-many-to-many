@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTypeRequest;
-use App\Http\Requests\UpdateTypeRequest;
-use App\Models\Project;
-use App\Models\Type;
+use App\Models\Technology;
 use Illuminate\Http\Request;
+use App\Models\Project;
 use Illuminate\Support\Str;
+use App\Http\Requests\StoreTechnologyRequest;
+use App\Http\Requests\UpdateTechnologyRequest;
 
-class TypeController extends Controller
+class TechnologyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +19,10 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $types=Type::all();
-        $projects=Project::all();
-        return view('admin.types.index',compact('types','projects'));
+        $technologies = Technology::all();
+        $projects = Project::all();
+        return view('admin.technologies.index',compact('technologies','projects'));
+
     }
 
     /**
@@ -31,7 +32,7 @@ class TypeController extends Controller
      */
     public function create()
     {
-        return view('admin.types.create');
+        return view('admin.technologies.create');
     }
 
     /**
@@ -40,30 +41,30 @@ class TypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTypeRequest $request)
+    public function store(StoreTechnologyRequest $request)
     {
         $data = $request->validated();
 
         $data['slug'] = Str::slug($request->name,'-');
 
-        $checkType = Type::where('slug', $data['slug'])->first();
+        $checkTechnology = Technology::where('slug', $data['slug'])->first();
 
-        if($checkType){
+        if($checkTechnology){
             return back()->withInput()->withErrors(['slug' => 'Con questo nome crei uno slug doppiato,perfavore cambia titolo']);
         }
-        
-        $newType = Type::create($data);
 
-        return redirect()->route('admin.types.index');
+        $newTechnology = Technology::create($data);
+
+        return redirect()->route('admin.technologies.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Type  $type
+     * @param  \App\Models\Technology  $technology
      * @return \Illuminate\Http\Response
      */
-    public function show(Type $type)
+    public function show(Technology $technology)
     {
         //stica
     }
@@ -71,48 +72,49 @@ class TypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Type  $type
+     * @param  \App\Models\Technology  $technology
      * @return \Illuminate\Http\Response
      */
-    public function edit(Type $type)
+    public function edit(Technology $technology)
     {
-        return view('admin.types.edit',compact('type'));
+        return view('admin.technologies.edit',compact('technology'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Type  $type
+     * @param  \App\Models\Technology  $technology
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTypeRequest $request, Type $type)
+    public function update(UpdateTechnologyRequest $request, Technology $technology)
     {
         $data = $request->validated();
 
         $data['slug'] = Str::slug($request->name,'-');
 
-        $checkType = Type::where('slug',$data['slug'])->where('id','<>',$type->id)->first();
+        $checkTechnology = Technology::where('slug',$data['slug'])->where('id','<>',$technology->id)->first();
 
-        if($checkType){
+        if($checkTechnology){
             return back()->withInput()->withErrors(['slug' => 'Con questo nome crei uno slug doppiato,perfavore cambia titolo']);
         }
 
-        $type->update($data);
+        $technology->update($data);
 
-        return redirect()->route('admin.types.index');
+        return redirect()->route('admin.technologies.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Type  $type
+     * @param  \App\Models\Technology  $technology
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Type $type)
+    public function destroy(Technology $technology)
     {
-        $type->delete();
 
-        return redirect()->route('admin.types.index');
+        $technology->delete();
+
+        return redirect()->route('admin.technologies.index');
     }
 }

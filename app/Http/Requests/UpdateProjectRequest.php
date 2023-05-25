@@ -32,7 +32,7 @@ class UpdateProjectRequest extends FormRequest
             'link' => 'nullable|url|max:255',
             'preview_image' => 'nullable|url|max:255',
             'type_id' => 'nullable|exists:types,id',
-            'technology_id' => 'exists:technologies,id'
+            'technologies' => 'exists:technologies,id'
         ];
 
     }
@@ -53,7 +53,7 @@ class UpdateProjectRequest extends FormRequest
 
             'type_id.exists' => 'Il valore(tipo) inserito non è accettabile',
 
-            'technology_id.exists' => 'Il valore(tecnologia) inserito non è accettabile'
+            'technologies.exists' => 'Il valore(tecnologia) inserito non è accettabile'
 
         ];
     }

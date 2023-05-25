@@ -29,7 +29,7 @@ class StoreProjectRequest extends FormRequest
             'link' => 'nullable|url|max:255',
             'preview_image' => 'nullable|url|max:255',
             'type_id' => 'nullable|exists:types,id',
-            'technology_id' => 'exists:technologies,id'
+            'technologies' => 'exists:technologies,id'
         ];
 
     }
@@ -50,7 +50,7 @@ class StoreProjectRequest extends FormRequest
 
             'type_id.exists' => 'Il valore inserito non è accettabile',
 
-            'technologies_id.exists' => 'Il valore(tecnologia) inserito non è accettabile'
+            'technologies.exists' => 'Il valore(tecnologia) inserito non è accettabile'
 
         ];
     }

@@ -57,7 +57,33 @@
             <li>
                 <a href="{{ route('admin.types.create') }}" class="nav-link text-white ms-4 @if (Route::currentRouteName()=='admin.types.create') active @endif">
                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-                Aggiungi nuovo Tipo
+                Aggiungi Tipo
+                </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <i class="fa-light fa-list-tree"></i>
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse" data-bs-target="#technology-collapse" aria-expanded="true">
+            <i class="fa-light fa-list-tree"></i>
+            <a href="{{ route('admin.projects.index') }}" class="nav-link text-white ps-1" >
+                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+                Technology
+              </a>
+        </button>
+        <div class="collapse show" id="technology-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li>
+                <a href="{{ route('admin.technologies.index') }}" class="nav-link text-white ms-4 @if (Route::currentRouteName()=='admin.technologies.index') active @endif">
+                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+                    Elenco Tecnologie
+                  </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.technologies.create') }}" class="nav-link text-white ms-4 @if (Route::currentRouteName()=='admin.technologies.create') active @endif">
+                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+                Aggiungi Tecnologia
                 </a>
             </li>
           </ul>
