@@ -5,7 +5,7 @@
 
         <div class="container">
             <div class="row">
-                <form method="POST" action="{{route('admin.projects.update',['project'=>$project->post_slug])}}">
+                <form method="POST" action="{{route('admin.projects.update',['project'=>$project->post_slug])}}" enctype="multipart/form-data">
 
                     @csrf
                     @method('PUT')
@@ -49,9 +49,15 @@
                             <p class="text-success">Campo inserito correttamente!</p>
                         @endif
                     </div>
+                    @if ($project->preview_image)
+                    <div class="edit-img">
+                        <img class="card-img-top" src="{{ asset('storage/' . $project->preview_image)}}" alt="{{$project->title}}">
+                        <a href="{{route('admin.projects.imageDelete',['slug' => $project->post_slug])}}" class="my-btn-delete btn btn-danger">Cancella immagine</a>
+                    </div>
+                    @endif
                     <div class="mb-3">
                         <label for="preview_image" class="form-label">Immagine preview:</label>
-                        <input type="text" class="form-control @error('preview_image') is-invalid @enderror" id="preview_image" name="preview_image" value="{{old('preview_image', $project->preview_image)}}">
+                        <input type="file" class="form-control @error('preview_image') is-invalid @enderror" id="preview_image" name="preview_image">
                         @if ($errors->has('preview_image'))
                             @error('preview_image')
                                 <div class="invalid-feedback">

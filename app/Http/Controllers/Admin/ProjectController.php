@@ -9,6 +9,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Technology;
 use App\Models\Type;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -55,14 +56,18 @@ class ProjectController extends Controller
             return back()->withInput()->withErrors(['post_slug' => 'Con quersto titolo crei uno slug doppiato,perfavore cambia titolo']);
         }
 
-        $newProject = new Project();
+        if($request->hasFile('preview_image')){
+            $path = Storage::put('preview-image-cover',$request->preview_image);
+            $data['preview_image'] = $path;
+        }
 
-        $newProject->fill($data);
-        $newProject->save();
+        $newProject = Project::create($data);
 
         if($request->has('technologies')){
             $newProject->technologies()->attach($request->technologies);
         }
+
+
 
         return redirect()->route('admin.projects.show',['project'=>$newProject->post_slug]);
 
@@ -110,6 +115,16 @@ class ProjectController extends Controller
         if($checkProject){
             return back()->withInput()->withErrors(['slug' => 'impossibile creare uno slug']);
         }
+        if($request->hasFile('preview_image')){
+
+            if($project->preview_image){
+                Storage::delete($project->preview_image);
+            }
+
+            $path = Storage::put('preview-image-cover',$request->preview_image);
+            $data['preview_image'] = $path;
+
+        }
 
         $project->update($data);
 
@@ -126,8 +141,27 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+
+        if($project->preview_image){
+            Storage::delete($project->preview_image);
+        }
+
         $project->delete();
 
         return redirect()->route('admin.projects.index');
+    }
+
+    public function imageDelete($slug){
+
+        $project = Project::where('post_slug', $slug)->firstOrFail();
+
+        if($project->preview_image){
+            Storage::delete($project->preview_image);
+            $project->preview_image = null;
+            $project->save();
+        }
+
+
+        return redirect()->route('admin.projects.edit',['project'=>$project->post_slug]);
     }
 }

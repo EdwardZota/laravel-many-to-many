@@ -4,8 +4,12 @@
 @include('partials.sidebar')
 <div class="container">
     <div class="row my-5">
-        <div class="card bg-black text-white" style="width: 18rem;">
-            <img class="card-img-top" src="{{$project->preview_image}}" alt="{{$project->title}}">
+        <div class="card bg-black text-white px-0" style="width: 18rem;">
+            @if ($project->preview_image)
+                <img class="card-img-top" src="{{ asset('storage/' . $project->preview_image)}}" alt="{{$project->title}}">
+            @else
+                <img class="card-img-top" src="{{ asset('storage/image_not_available.png')}}" alt="{{$project->title}}">
+            @endif
             <div class="card-body">
               <p class="card-text"><span class="font-weight-bold"> Titolo:</span> <br>{{$project->title}}</p>
               <p class="card-text"><span class="font-weight-bold">Descrizione:</span> <br>{{$project->description}}</p>

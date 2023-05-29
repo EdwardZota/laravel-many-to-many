@@ -4,7 +4,7 @@
 @include('partials.sidebar')
 <div class="container">
     <div class="row my-5">
-        <table class="table table-hover table-striped table-bordered">
+        <table class="table table-hover table-bordered">
             <thead>
             <tr>
                 <th scope="col">Progetto</th>
@@ -18,7 +18,17 @@
                     <tr>
                         <th>{{$project->id}}</th>
                         <td>{{$project->title}}</td>
-                        <td>{{$project->preview_image}}</td>
+                        <td>
+                            @if ($project->preview_image)
+                            <div class="index_img">
+                                <img class="card-img-top" src="{{ asset('storage/' . $project->preview_image)}}" alt="{{$project->title}}">
+                            </div>
+                            @else
+                                <div class="index_img">
+                                    <img class="card-img-top" src="{{ asset('storage/image_not_available.png')}}" alt="{{$project->title}}">
+                                </div>
+                            @endif
+                        </td>
                         <td class="d-flex">
                             <div class="my-2">
                                 <a href="{{route('admin.projects.show',$project->post_slug)}}" class="btn btn-primary ">Info</a>

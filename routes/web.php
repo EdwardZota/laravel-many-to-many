@@ -27,9 +27,12 @@ Route::middleware(['auth','verified'])
     ->prefix('admin')
     ->group(function(){
         Route::get('/',[DashboardController::class, 'index'])->name('dashboard');
+
         Route::resource('projects',ProjectController::class)->parameters([
             'projects' => 'project:post_slug'
         ]);
+
+        Route::get('projects/{slug}/imageDelete',[ProjectController::class,'imageDelete'])->name('projects.imageDelete');
 
         Route::resource('types',TypeController::class)->parameters([
             'types' => 'type:slug'

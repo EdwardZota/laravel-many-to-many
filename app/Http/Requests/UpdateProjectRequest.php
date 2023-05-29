@@ -27,10 +27,10 @@ class UpdateProjectRequest extends FormRequest
         return [
             'title' => ['required',
             'max:255',
-            Rule::unique('projects')->ignore($this->user()->id)],
+            Rule::unique('projects')->ignore($this->project)],
             'description' => 'nullable|max:65000',
             'link' => 'nullable|url|max:255',
-            'preview_image' => 'nullable|url|max:255',
+            'preview_image' => 'nullable|image|max:2048',
             'type_id' => 'nullable|exists:types,id',
             'technologies' => 'exists:technologies,id'
         ];
@@ -48,8 +48,8 @@ class UpdateProjectRequest extends FormRequest
             'link.url' => 'L\'URL inserito non è valido',
             'link.max' => 'Lunghezza massima link di 255 caratteri',
 
-            'preview_image.url' => 'L\'URL inserito non è valido',
-            'preview_image.max' => 'Lunghezza massima preview image link di 255 caratteri',
+            'preview_image.image' => 'l\'immagine inserita non è valida',
+            'preview_image.max' => 'l\'immagine inserita ha una dimensione maggiore di 2MB',
 
             'type_id.exists' => 'Il valore(tipo) inserito non è accettabile',
 
